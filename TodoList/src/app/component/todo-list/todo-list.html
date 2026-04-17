@@ -3,7 +3,7 @@
     <header class="todo-header">
       <div>
         <h1>Todo List</h1>
-        <p class="todo-subtitle">Простий список завдань із пріоритетами та швидким редагуванням.</p>
+        <p class="todo-subtitle">Простий список завдань із пріоритетами, редагуванням і фільтрацією.</p>
       </div>
       <div class="todo-stats">
         <span>{{ todos.length }} завдань</span>
@@ -22,8 +22,10 @@
       <button class="primary-button" (click)="addTodo()">Додати</button>
     </div>
 
+    <app-todo-filtr [todos]="todos" (filteredTodosChange)="updateFilteredTodos($event)"></app-todo-filtr>
+
     <ul class="todo-list">
-      <li *ngFor="let todo of todos" class="todo-item" [class.todo-item-completed]="todo.completed">
+      <li *ngFor="let todo of filteredTodos" class="todo-item" [class.todo-item-completed]="todo.completed">
         <label class="todo-check">
           <input type="checkbox" [checked]="todo.completed" (change)="toggleCompleted(todo.id)" />
           <span></span>
@@ -41,25 +43,15 @@
             [ngClass]="{
               'priority-low': todo.priority === 'low',
               'priority-medium': todo.priority === 'medium',
-              'priority-high': todo.priority === 'high',
+              'priority-high': todo.priority === 'high'
             }"
           >
-            {{
-              todo.priority === 'low'
-                ? 'Низький'
-                : todo.priority === 'medium'
-                  ? 'Середній'
-                  : 'Високий'
-            }}
+            {{ todo.priority === 'low' ? 'Низький' : todo.priority === 'medium' ? 'Середній' : 'Високий' }}
           </span>
         </div>
 
         <div class="todo-actions">
-          <select
-            class="priority-select"
-            [ngModel]="todo.priority"
-            (ngModelChange)="changePriority(todo, $event)"
-          >
+          <select class="priority-select" [ngModel]="todo.priority" (ngModelChange)="changePriority(todo, $event)">
             <option value="low">Низький</option>
             <option value="medium">Середній</option>
             <option value="high">Високий</option>
@@ -71,8 +63,9 @@
       </li>
     </ul>
 
-    <p *ngIf="todos.length === 0" class="empty-state">
-      Поки що завдань немає. Додайте перше у форму вище.
+    <p *ngIf="todos.length === 0" class="empty-state">Поки що завдань немає. Додайте перше у форму вище.</p>
+    <p *ngIf="todos.length > 0 && filteredTodos.length === 0" class="empty-state">
+      Для цього фільтра завдань немає.
     </p>
   </section>
 </div>

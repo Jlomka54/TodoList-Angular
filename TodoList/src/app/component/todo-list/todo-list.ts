@@ -5,15 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { Todo, TodoPriority } from '../../models/todo';
 import { TodoService } from '../../services/todo';
 import { TodoEdit } from '../todo-edit/todo-edit';
+import { TodoFiltr } from '../todo-filtr/todo-filtr';
 
 @Component({
   selector: 'app-todo-list',
-  imports: [CommonModule, FormsModule, TodoEdit],
+  imports: [CommonModule, FormsModule, TodoEdit, TodoFiltr],
   templateUrl: './todo-list.html',
   styleUrl: './todo-list.css',
 })
 export class TodoList {
   todos: Todo[] = [];
+  filteredTodos: Todo[] = [];
   newTitle = '';
   newPriority: TodoPriority = 'medium';
   editingTodo: Todo | null = null;
@@ -23,6 +25,7 @@ export class TodoList {
   ngOnInit(): void {
     this.todoService.loadTodos().subscribe((todos) => {
       this.todos = this.todoService.sortByPriority(todos);
+      this.filteredTodos = this.todos;
     });
   }
 
@@ -33,6 +36,7 @@ export class TodoList {
 
     const updatedTodos = this.todoService.addTodo(trimmedTitle, this.newPriority);
     this.todos = this.todoService.sortByPriority(updatedTodos);
+    this.filteredTodos = this.todos;
 
     this.newTitle = '';
     this.newPriority = 'medium';
@@ -41,11 +45,13 @@ export class TodoList {
   deleteTodo(id: number): void {
     const updatedTodos = this.todoService.deleteTodo(id);
     this.todos = this.todoService.sortByPriority(updatedTodos);
+    this.filteredTodos = this.todos;
   }
 
   toggleCompleted(id: number): void {
     const updatedTodos = this.todoService.toggleCompleted(id);
     this.todos = this.todoService.sortByPriority(updatedTodos);
+    this.filteredTodos = this.todos;
   }
 
   changePriority(todo: Todo, priority: TodoPriority): void {
@@ -56,6 +62,7 @@ export class TodoList {
 
     const updatedTodos = this.todoService.updateTodo(updatedTodo);
     this.todos = this.todoService.sortByPriority(updatedTodos);
+    this.filteredTodos = this.todos;
   }
 
   editTodo(todo: Todo): void {
@@ -81,6 +88,11 @@ export class TodoList {
 
     const updatedTodos = this.todoService.updateTodo(updatedTodo);
     this.todos = this.todoService.sortByPriority(updatedTodos);
+    this.filteredTodos = this.todos;
     this.closeEditModal();
+  }
+
+  updateFilteredTodos(todos: Todo[]): void {
+    this.filteredTodos = todos;
   }
 }

@@ -1,0 +1,26 @@
+<div class="todo-filter">
+  <button
+    type="button"
+    class="filter-button"
+    [class.filter-button-active]="selectedFilter === 'all'"
+    (click)="setFilter('all')"
+  >
+    Всі
+  </button>
+  <button
+    type="button"
+    class="filter-button"
+    [class.filter-button-active]="selectedFilter === 'active'"
+    (click)="setFilter('active')"
+  >
+    Невиконані
+  </button>
+  <button
+    type="button"
+    class="filter-button"
+    [class.filter-button-active]="selectedFilter === 'completed'"
+    (click)="setFilter('completed')"
+  >
+    Виконані
+  </button>
+</div>

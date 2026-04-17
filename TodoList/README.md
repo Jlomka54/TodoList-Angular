@@ -1,59 +1,150 @@
-# TodoList
+# Todo List Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+Todo List Angular — це навчальний Angular-застосунок для керування списком завдань. Проєкт дозволяє створювати, редагувати, видаляти та фільтрувати задачі, а також працювати з пріоритетами. Дані зберігаються в `localStorage`, тому список не зникає після перезавантаження сторінки.
 
-## Development server
+## Що можна робити в проєкті
 
-To start a local development server, run:
+- Додавати нові завдання.
+- Вказувати пріоритет задачі: `low`, `medium`, `high`.
+- Позначати завдання як виконані або невиконані.
+- Видаляти завдання зі списку.
+- Редагувати `title` та `description` у модальному вікні.
+- Фільтрувати список: показувати всі, лише виконані або лише невиконані задачі.
+- Автоматично сортувати задачі за пріоритетом.
+- Завантажувати стартові дані з API `JSONPlaceholder`, якщо `localStorage` ще порожній.
+
+## Реалізовані функції
+
+### 1. Робота із завданнями
+
+У застосунку можна створити нове завдання через форму на головній сторінці. Для кожного todo доступні:
+
+- назва завдання `title`
+- опис `description`
+- статус виконання `completed`
+- пріоритет `priority`
+
+### 2. Редагування
+
+Для редагування використовується окремий компонент `todo-edit`. При натисканні на кнопку `Редагувати` відкривається модальне вікно, у якому можна:
+
+- змінити назву завдання
+- додати або змінити опис
+- зберегти зміни кнопкою `Зберегти`
+
+### 3. Фільтрація
+
+Для фільтрації використовується окремий компонент `todo-filtr`. Він дозволяє швидко перемикатися між режимами:
+
+- `Всі`
+- `Невиконані`
+- `Виконані`
+
+### 4. Сортування за пріоритетом
+
+Після додавання, редагування або зміни пріоритету список автоматично сортується:
+
+- `high` має найвищий пріоритет
+- `medium` середній
+- `low` найнижчий
+
+### 5. Збереження даних
+
+Усі зміни зберігаються в `localStorage`. Це означає, що:
+
+- після оновлення сторінки завдання залишаються
+- користувацькі зміни не губляться
+- локально створені todo працюють без бекенда
+
+### 6. Початкове завантаження даних
+
+Якщо в `localStorage` ще немає збережених задач, застосунок робить запит до:
+
+`https://jsonplaceholder.typicode.com/todos`
+
+Після цього:
+
+- бере перші 15 завдань
+- додає їм стандартний пріоритет `medium`
+- зберігає їх у `localStorage`
+
+## Технології
+
+У проєкті використано:
+
+- Angular 21
+- TypeScript
+- RxJS
+- Angular Forms
+- Angular HttpClient
+- localStorage
+- JSONPlaceholder API
+
+## Структура проєкту
+
+Основні частини застосунку:
+
+- `src/app/component/todo-list` — головний компонент списку завдань
+- `src/app/component/todo-edit` — компонент модального редагування todo
+- `src/app/component/todo-filtr` — компонент фільтрації завдань
+- `src/app/services/todo.ts` — основна бізнес-логіка роботи із задачами
+- `src/app/services/storage.ts` — збереження та читання даних з `localStorage`
+- `src/app/services/api.ts` — отримання стартових todo з API
+- `src/app/models/todo.ts` — модель завдання
+
+## Як запустити проєкт
+
+### 1. Встановлення залежностей
 
 ```bash
-ng serve
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 2. Запуск у режимі розробки
 
 ```bash
-ng generate component component-name
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Після запуску застосунок буде доступний за адресою:
+
+`http://localhost:4200/`
+
+### 3. Production build
 
 ```bash
-ng generate --help
+npm run build
 ```
 
-## Building
+Зібрані файли будуть створені в директорії `dist/`.
 
-To build the project run:
+### 4. Запуск тестів
 
 ```bash
-ng build
+npm test
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Для кого цей проєкт
 
-## Running unit tests
+Цей проєкт підійде для:
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+- практики Angular-компонентів
+- вивчення `@Input()` та `@Output()`
+- роботи з формами
+- роботи з локальним сховищем браузера
+- базової архітектури Angular-застосунку з сервісами та моделями
 
-```bash
-ng test
-```
+## Можливі покращення
 
-## Running end-to-end tests
+У майбутньому в проєкт можна додати:
 
-For end-to-end (e2e) testing, run:
+- пошук по завданнях
+- дедлайни для задач
+- категорії або теги
+- окремий бекенд для збереження даних
+- авторизацію користувача
+- drag-and-drop сортування
 
-```bash
-ng e2e
-```
+## Підсумок
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Todo List Angular — це простий, але функціональний застосунок для керування задачами. У ньому вже реалізовані основні можливості CRUD, редагування через модальне вікно, фільтрація, сортування за пріоритетом і збереження даних у браузері.

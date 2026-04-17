@@ -1,0 +1,30 @@
+<div class="modal-backdrop" (click)="onCancel()">
+  <section class="modal-card" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <div>
+        <p class="modal-kicker">todo-edit</p>
+        <h2>Редагування завдання</h2>
+      </div>
+      <button type="button" class="close-button" (click)="onCancel()" aria-label="Закрити">
+        ×
+      </button>
+    </header>
+
+    <div class="modal-form">
+      <label>
+        <span>Тайтл</span>
+        <input type="text" [(ngModel)]="title" placeholder="Введіть тайтл" />
+      </label>
+
+      <label>
+        <span>Опис</span>
+        <textarea [(ngModel)]="description" rows="5" placeholder="Введіть опис завдання"></textarea>
+      </label>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="secondary-button" (click)="onCancel()">Скасувати</button>
+      <button type="button" class="primary-button" (click)="onSave()">Зберегти</button>
+    </div>
+  </section>
+</div>

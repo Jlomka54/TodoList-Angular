@@ -28,6 +28,7 @@ export class TodoService {
           id: todo.id,
           userId: todo.userId,
           title: todo.title,
+          description: '',
           completed: todo.completed,
           priority: 'medium',
         }));
@@ -48,6 +49,7 @@ export class TodoService {
     const newTodo: Todo = {
       id: Date.now(),
       title,
+      description: '',
       completed: false,
       priority,
       isLocal: true,
